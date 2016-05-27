@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secureemail.dao.impl.EmailDaoImpl">
+    <resultMap id="emailResultMap" type="Email" autoMapping="true">
+
+    </resultMap>
+    <insert id="insert">
+        INSERT INTO e_mail(accept_person_id,accept_person_name,send_person_id,send_person_name,e_mail_theme,send_information,send_time,isread,atuosend,sendoraccept)
+        VALUES (#{acceptPersonId},#{acceptPersonName},#{sendPersonId},#{sendPersonName},#{emailTheme},#{sendInformation},#{sendTime},#{isRead},#{atuoSend},{snedOrAccept});
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM e_mail
+        <where>
+            <if test="emailId!=null or emailId!=''">AND e_mail_id = #{emailId}</if>
+            <if test="acceptPersonId!=null or acceptPersonId!=''">AND accept_person_id = #{acceptPersonId}</if>
+            <if test="acceptPersonName!=null or acceptPersonName!=''">AND accept_person_name = #{acceptPersonName}</if>
+            <if test="sendPersonId!=null or sendPersonId!=''">AND send_person_id = #{sendPersonId}</if>
+            <if test="sendPersonName!=null or sendPersonName!=''">AND send_person_name = #{sendPersonName}</if>
+            <if test="emailTheme!=null or emailTheme!=''">AND e_mail_theme = #{emailTheme}</if>
+            <if test="sendInformation!=null or sendInformation!=''">AND send_information = #{sendInformation}</if>
+            <if test="sendTime!=null or sendTime!=''">AND send_time = #{sendTime}</if>
+            <if test="isRead!=null">AND isread = #{isRead}</if>
+            <if test="autoSend!=null">AND autosend = #{autoSend}</if>
+            <if test="sendOrAccept!=null">AND sendoraccept = #{sendOrAccept}</if>
+        </where>
+    </delete>
+
+    <update id="update">
+        UPDATE e_mail
+        <set>
+            <if test="acceptPersonId!=null or acceptPersonId!=''"> accept_person_id = #{acceptPersonId}</if>
+            <if test="acceptPersonName!=null or acceptPersonName!=''"> accept_person_name = #{acceptPersonName}</if>
+            <if test="sendPersonId!=null or sendPersonId!=''"> send_person_id = #{sendPersonId}</if>
+            <if test="sendPersonName!=null or sendPersonName!=''"> send_person_name = #{sendPersonName}</if>
+            <if test="emailTheme!=null or emailTheme!=''"> e_mail_theme = #{emailTheme}</if>
+            <if test="sendInformation!=null or sendInformation!=''"> send_information = #{sendInformation}</if>
+            <if test="sendTime!=null or sendTime!=''"> send_time = #{sendTime}</if>
+            <if test="isRead!=null"> isread = #{isRead}</if>
+            <if test="autoSend!=null"> autosend = #{autoSend}</if>
+            <if test="sendOrAccept!=null"> sendoraccept = #{sendOrAccept}</if>
+        </set>
+        WHERE e_mail_id = #{emailId}
+    </update>
+
+    <select id="find">
+        SELECT * FROM e_mail
+        <where>
+            <if test="emailId!=null or emailId!=''">AND e_mail_id = #{emailId}</if>
+            <if test="acceptPersonId!=null or acceptPersonId!=''">AND accept_person_id = #{acceptPersonId}</if>
+            <if test="acceptPersonName!=null or acceptPersonName!=''">AND accept_person_name = #{acceptPersonName}</if>
+            <if test="sendPersonId!=null or sendPersonId!=''">AND send_person_id = #{sendPersonId}</if>
+            <if test="sendPersonName!=null or sendPersonName!=''">AND send_person_name = #{sendPersonName}</if>
+            <if test="emailTheme!=null or emailTheme!=''">AND e_mail_theme = #{emailTheme}</if>
+            <if test="sendInformation!=null or sendInformation!=''">AND send_information = #{sendInformation}</if>
+            <if test="sendTime!=null or sendTime!=''">AND send_time = #{sendTime}</if>
+            <if test="isRead!=null">AND isread = #{isRead}</if>
+            <if test="autoSend!=null">AND autosend = #{autoSend}</if>
+            <if test="sendOrAccept!=null">AND sendoraccept = #{sendOrAccept}</if>
+        </where>
+    </select>
+</mapper>

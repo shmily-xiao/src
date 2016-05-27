@@ -1,0 +1,27 @@
+<style type="text/css">
+.t{
+border-collapse:collapse;
+border:1px solid #0077FF;
+}
+td,th{
+border:1px solid #0077FF;
+}
+th{
+background-color:#0099FF;
+}
+td{
+color:#666666;
+font-size:14px;
+}
+
+a{
+color:#666666;
+text-decoration:none;
+}
+a:hover{
+color:#990000;
+}
+body {
+	background-color: #cfffFF;
+}
+</style>

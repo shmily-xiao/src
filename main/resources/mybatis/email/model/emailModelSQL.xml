@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secureemail.dao.impl.EmailModelDaoImpl">
+    <resultMap id="emailModelResultMap" type="EmailModel" autoMapping="true">
+    </resultMap>
+    <insert id="insert">
+        INSERT INTO e_mail_model(e_mail_theme,e_mail_detail)
+        VALUES (#{emailModelTheme},{emailModelDetail});
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM e_mail_model
+        <where>
+            <if test="emailModelId!=null or emailModelId!=''">AND e_mail_id = #{emailModelId}</if>
+            <if test="emailModelTheme!=null or emailModelTheme!=''">AND e_mail_theme = #{emailModelTheme}</if>
+            <if test="emailModelDetail!=null or emailModelDetail!=''">AND e_mail_detail = #{emailModelDetail}</if>
+        </where>
+    </delete>
+
+    <update id="update">
+        UPDATE e_mail_model
+        <set>
+            <if test="emailModelTheme!=null or emailModelTheme!=''"> e_mail_theme = #{emailModelTheme}</if>
+            <if test="emailModelDetail!=null or emailModelDetail!=''"> e_mail_detail = #{emailModelDetail}</if>
+        </set>
+        WHERE e_mail_id = #{emailModelId}
+    </update>
+
+    <select id="find">
+        SELECT * FROM e_mail_model
+        <where>
+            <if test="emailModelId!=null or emailModelId!=''">AND e_mail_id = #{emailModelId}</if>
+            <if test="emailModelTheme!=null or emailModelTheme!=''">AND e_mail_theme = #{emailModelTheme}</if>
+            <if test="emailModelDetail!=null or emailModelDetail!=''">AND e_mail_detail = #{emailModelDetail}</if>
+        </where>
+    </select>
+</mapper>
