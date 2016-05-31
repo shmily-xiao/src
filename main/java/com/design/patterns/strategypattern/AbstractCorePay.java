@@ -24,10 +24,10 @@ public abstract class AbstractCorePay implements Pay{
 
     @Override
     public void initData(Object ...value) {
-        this.type = (SaleTypeEnum) value[0];
-        this.sale = (Double) value[1];
-        if (value[2] != null){
-            this.reduceMoney = (Double) value[2];
+//        this.type = (SaleTypeEnum) value[0];
+        this.sale = Double.valueOf(value[0] + "");
+        if (value[1] != null){
+            this.reduceMoney = Double.valueOf(value[1] + "");
         }
     }
 

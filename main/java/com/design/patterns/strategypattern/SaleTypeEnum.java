@@ -27,6 +27,15 @@ public enum SaleTypeEnum {
         this.reduceMoney = reduceMoney;
     }
 
+    public static SaleTypeEnum of(String name){
+        for(SaleTypeEnum typeEnum : SaleTypeEnum.values()){
+            if(typeEnum.value.equals(name)) {
+                return typeEnum;
+            }
+        }
+        return null;
+    }
+
     public String getValue() {
         return value;
     }
