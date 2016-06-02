@@ -1,4 +1,4 @@
-package com.design.patterns.strategypattern;
+package com.design.patterns.strategypattern.factory;
 
 import java.util.List;
 

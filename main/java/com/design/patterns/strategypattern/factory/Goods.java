@@ -1,4 +1,4 @@
-package com.design.patterns.strategypattern;
+package com.design.patterns.strategypattern.factory;
 
 /**
  * Created by simpletour_Jenkin on 2016/5/27.
