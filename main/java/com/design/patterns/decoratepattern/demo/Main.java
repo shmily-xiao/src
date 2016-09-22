@@ -9,6 +9,7 @@ public class Main {
         ConcreteDecoratorA d1 = new ConcreteDecoratorA();
         ConcreteDecoratorB d2 = new ConcreteDecoratorB();
 
+        // 一层层的修饰
         d1.setComponent(c);
         d2.setComponent(d1);
         d2.Operation();
