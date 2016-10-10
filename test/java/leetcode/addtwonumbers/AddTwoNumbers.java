@@ -1,9 +1,8 @@
-package leetcode;
-
-import java.util.List;
+package leetcode.addtwonumbers;
 
 /**
  * Created by simpletour_Jenkin on 2016/10/10.
+ * 65ms
  */
 public class AddTwoNumbers {
 
