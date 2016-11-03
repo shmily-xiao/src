@@ -43,8 +43,8 @@ public class AddMoneyThread implements Runnable{
 
     @Override
     public void run() {
-        synchronized (account) {
+//        synchronized (account) {
             account.deposit(money);
-        }
+//        }
     }
 }
