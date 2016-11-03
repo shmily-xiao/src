@@ -14,5 +14,13 @@ public class Test {
         }
         System.out.println(count);
 
+
+//        for (int y = 1; y <= 2250/29;y++){
+//            for (int x = 1 ;x <= 2250/53;x++){
+//                if (53*x+29*y == 2250){
+//                    System.out.println("x=" + x+",y="+y);
+//                }
+//            }
+//        }
     }
 }
