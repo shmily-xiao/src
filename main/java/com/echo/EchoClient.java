@@ -18,7 +18,7 @@ import java.util.Scanner;
  * 第几次，是否通过认证，客户端随机数，服务端随机数，是否结束回话，内容
  *
  * 比如：
- * 1,false,256,456,false,abc
+ * 1,false,256,456,false,abcd
  *
  *
  */
