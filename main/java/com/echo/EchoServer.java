@@ -39,10 +39,16 @@ public class EchoServer {
 
         @Override
         public void run() {
+            // br 读取在socket通道里面接收的内容
             try(BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                // 在通道里面发送想发送的数据
                 PrintWriter pw = new PrintWriter(client.getOutputStream())){
+                // 得到接收过来的数据
                 String msg = br.readLine();
+
                 System.out.println("收到" + client.getInetAddress() + "发送的"+ msg);
+
+                // 发送数据
                 pw.println(msg);
                 pw.flush();
             }catch (IOException e){
