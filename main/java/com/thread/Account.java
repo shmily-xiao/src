@@ -15,6 +15,13 @@ public class Account {
 
     private double balance;     // 账户余额
 
+
+    public Account(){}
+
+    public Account(double balance){
+        this.balance = balance;
+    }
+
     /**
      * 存款
      * @param money 存入金额
