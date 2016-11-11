@@ -70,15 +70,18 @@ class Consumer implements Runnable{
     public void run() {
         while(true){
             synchronized (buffer){
-                try{
-                    buffer.wait();
-                }catch (InterruptedException e){
-                    e.printStackTrace();
+                while(buffer.isEmpty()) {
+                    try {
+                        buffer.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
+
             Task task = buffer.remove(0);
             buffer.notifyAll();
             System.out.println("Consumer["+Thread.currentThread().getName()+"] got " + task);
+            }
         }
     }
 }
