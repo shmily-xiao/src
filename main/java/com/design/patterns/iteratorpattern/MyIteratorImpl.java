@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Created by simpletour_Jenkin on 2016/11/16.
+ *
+ * 这个迭代器的具体实现
  */
 public class MyIteratorImpl implements Iterator{
 

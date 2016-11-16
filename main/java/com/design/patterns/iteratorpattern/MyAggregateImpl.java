@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by simpletour_Jenkin on 2016/11/16.
  *
- * 创建被迭代的对象的数据
+ * 创建被迭代的对象的数据，这是一个包装类
  *
  */
 public class MyAggregateImpl implements Aggregate {
