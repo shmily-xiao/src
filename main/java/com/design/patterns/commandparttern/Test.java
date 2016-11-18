@@ -8,7 +8,7 @@ public class Test {
         //
         Receiver receiver = new Receiver();
 
-        Command command = new ConcreteCommand(receiver);
+        Command command = new ConcreteCommand(receiver); // 创建一个命令但是不一定要立即执行
 
         Invoker invoker = new Invoker();
 
