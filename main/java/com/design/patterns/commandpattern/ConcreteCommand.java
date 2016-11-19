@@ -1,4 +1,4 @@
-package com.design.patterns.commandparttern;
+package com.design.patterns.commandpattern;
 
 /**
  *

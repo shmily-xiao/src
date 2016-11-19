@@ -1,4 +1,4 @@
-package com.design.patterns.commandparttern;
+package com.design.patterns.commandpattern;
 
 /**
  * Created by simpletour_Jenkin on 2016/11/17.
