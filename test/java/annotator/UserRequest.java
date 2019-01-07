@@ -1,19 +1,19 @@
-package annotator;
+package java.annotator;
 
 /**
  * Created by simpletour_Jenkin on 2016/6/7.
  */
 public class UserRequest {
 
-    @SunOfBeach(validateType = {SunOfBeach.Type.notNull})
-    private Long id;
+    @annotator.SunOfBeach(validateType = {annotator.SunOfBeach.Type.notNull})
+    private final ThreadLocal<Long> id = new ThreadLocal<Long>();
 
-    @SunOfBeach(validateType = {SunOfBeach.Type.notNull,SunOfBeach.Type.id})
+    @annotator.SunOfBeach(validateType = {annotator.SunOfBeach.Type.notNull, annotator.SunOfBeach.Type.id})
     private String idNo;
 
     private Type idType = Type.id;
 
-    @SunOfBeach(validateType = {SunOfBeach.Type.notNull})
+    @annotator.SunOfBeach(validateType = {annotator.SunOfBeach.Type.notNull})
     private String name;
 
     private String mobile;
@@ -37,12 +37,22 @@ public class UserRequest {
         }
     }
 
+    @annotator.SunOfBeach
+    public String sendMsg2Person(String msg, Long... persons){
+
+        for(Long person: persons) {
+            System.out.println();
+        }
+        return msg;
+
+    }
+
     public Long getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getIdNo() {

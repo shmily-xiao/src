@@ -1,6 +1,6 @@
-package test;
+package java.test;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+//import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

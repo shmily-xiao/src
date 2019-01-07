@@ -1,4 +1,4 @@
-package annotator;
+package java.annotator;
 
 import java.lang.reflect.Field;
 
@@ -13,7 +13,7 @@ public class SunOfBeachUtils {
         Field[] fields = clazz.getDeclaredFields();
 
         for (Field field : fields){
-            if (field.isAnnotationPresent(SunOfBeach.class)){
+            if (field.isAnnotationPresent(annotator.SunOfBeach.class)){
 
             }
         }

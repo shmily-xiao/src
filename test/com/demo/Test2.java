@@ -1,6 +1,6 @@
 package com.demo;
 
-import sun.security.provider.MD5;
+//import sun.security.provider.MD5;
 
 import java.util.Random;
 

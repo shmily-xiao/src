@@ -1,14 +1,12 @@
-package annotator;
+package com.zhujieAndAop;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
 
-/**
- * Created by simpletour_Jenkin on 2016/6/7.
- */
 /**
  *
  * @interface 用来声明一个注解，其中的每一个方法实际上是声明了一个配置参数。
@@ -23,19 +21,8 @@ import static java.lang.annotation.ElementType.PARAMETER;
  * @Target 用来声明注解可以被添加在哪些类型的元素上，如类型、方法和域等。
  * 就可以定义一个注解了，它将自动继承Annotation
  */
-@Target({PARAMETER,FIELD,METHOD})
+@Target({METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface SunOfBeach {
-
-    int value() default 0;
-
-    String msg() default "";
-
-    String error() default "";
-
-    enum Type {notNull, notBlank, length, max, min, id}
-
-    Type[] validateType() default {Type.notNull};
-
+public @interface TestA {
 }
