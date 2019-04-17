@@ -25,5 +25,17 @@ public class PublisherTest {
             .verifyComplete();
     }
 
+    private Mono<String> executeCommand(String command){
+        return Mono.just(command + "just");
+    }
+
+    public Mono<Void>  processOrFallback(Mono<String> commandSource, Mono<Void> doWhenEmpty){
+        return commandSource
+            .flatMap(command -> executeCommand(command).then())
+            .switchIfEmpty(doWhenEmpty);
+    }
+
+
+
 
 }
