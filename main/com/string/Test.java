@@ -1,5 +1,7 @@
 package com.string;
 
+import java.util.Collection;
+
 /**
  * Created by simpletour_Jenkin on 2016/11/3.
  */

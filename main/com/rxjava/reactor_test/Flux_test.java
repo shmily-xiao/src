@@ -143,12 +143,102 @@ public class Flux_test {
             .subscribe(item -> System.out.println(item));
 
 
-        Object[] objects =new Object[4];
-        //objects[0] = "sdfsdfds";
-        //objects[1] = 1;
-        //objects[2] = "3";
-        objects[0] = new TestJsonString("SB",2,"333");
-        System.out.println(JSONPath.eval(objects, "$[0].a"));
+
+        // 去掉 ctx.get(key) 之后就只打印 Hello，因为执行顺序的原因
+        // 如果把 subscriberContext(ctx -> ctx.put(key, "World")) 放在flatMap之前会报Context is empty
+        // The numbering above vs the actual line order is not a mistake: it represents the execution order.
+        // Even though subscriberContext is the last piece of the chain, it is the one that gets executed first
+        // (due to its subscription time nature, and the fact that the subscription signal flows from bottom to top).
+        // 从下往上执行
+        String key = "message";
+        Mono.just("Hello")
+            // 2
+            .flatMap(s -> Mono.subscriberContext()
+                // 3
+                .map(ctx -> s + " " + ctx.get(key)))
+            // 1
+            .subscriberContext(ctx -> ctx.put(key, "World"))
+            .subscribe(System.out::println);
+
+        // 输出 "Default"
+        Mono.subscriberContext()
+            .map(ctx -> ctx.put(key, "Hello"))
+            .flatMap(ctx -> Mono.subscriberContext())
+            .map(ctx -> ctx.getOrDefault(key, "Default"))
+            .subscribe(System.out::println);
+
+        // $$Context0{}
+        // @@Context1{message=World}
+        // Hello Reactor
+        Mono.just("Hello")
+            .flatMap( s -> Mono.subscriberContext()
+                .map( ctx -> s + " " + ctx.get(key)))
+            .subscriberContext(ctx -> {
+                System.out.println("@@" + ctx.toString());
+                return ctx.put(key, "Reactor");
+            })
+            .subscriberContext(ctx -> {
+                System.out.println("$$" + ctx.toString());
+                return ctx.put(key, "World");
+            }).subscribe(System.out::println);
+
+
+        // ++
+        // ==
+        // @@
+        // ##
+        // 输出 Hello 1 Reactor 2 World
+        Mono.just("Hello")
+            .flatMap( s -> Mono.subscriberContext()
+                // 3
+                .map( ctx -> {
+                    System.out.println("@@");
+                    return s + " 1 " + ctx.get(key);
+                }))
+            // 2
+            .subscriberContext(ctx -> {
+                System.out.println(" == ");
+                return ctx.put(key, "Reactor");
+            })
+            .flatMap( s -> Mono.subscriberContext()
+                // 4
+                .map( ctx -> {
+                    System.out.println("##");
+                    return s + " 2 " + ctx.get(key);
+                }))
+            // 1
+            .subscriberContext(ctx -> {
+                System.out.println(" ++ ");
+                return ctx.put(key, "World");
+            })
+            .subscribe(System.out::println);
+
+
+        // 1111
+        // Hello World**
+        // 3333
+        // 2222
+        // Hello World Reactor00
+        // Hello World Reactor
+        Mono.just("Hello")
+            .flatMap( s -> Mono.subscriberContext()
+                .map( ctx -> {
+                    System.out.println("1111");
+                    return s + " " + ctx.get(key);
+                })
+            ).doOnNext(s -> System.out.println(s + "**"))
+            .flatMap( s -> Mono.subscriberContext()
+                .map( ctx -> {
+                    System.out.println("2222");
+                    return s + " " + ctx.get(key);
+                })
+                .subscriberContext(ctx -> {
+                    System.out.println("3333");
+                    return ctx.put(key, "Reactor");
+                })
+            ).doOnNext(s -> System.out.println(s + "00"))
+            .subscriberContext(ctx -> ctx.put(key, "World"))
+            .subscribe(System.out::println);
 
     }
 
