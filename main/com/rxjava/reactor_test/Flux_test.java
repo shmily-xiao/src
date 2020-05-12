@@ -12,10 +12,9 @@ import reactor.core.scheduler.Schedulers;
 
 import java.awt.desktop.ScreenSleepEvent;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 public class Flux_test {
     public static void main(String[] args) throws Exception{
@@ -240,6 +239,91 @@ public class Flux_test {
             .subscriberContext(ctx -> ctx.put(key, "World"))
             .subscribe(System.out::println);
 
+        /**
+         * {1=44}
+         * {1=44, 2=44}
+         * {1=44, 2=44, 3=44}
+         * {1=44, 2=44, 3=44, 4=44}
+         * {1=44, 2=44, 3=44, 4=44, 5=44}
+         * iiii
+         */
+        Map<Integer, String> resultMap = new HashMap<>(5);
+        Flux.just(1,2,3,4,5)
+            .map(item -> {
+                resultMap.put(item, "44");
+                return resultMap;
+            }).doOnComplete(()-> System.out.println("iiii")).subscribe(item -> System.out.println(item));
+
+
+        // 测试多线程的能力
+        //List<Mono<String>> monos = new ArrayList<>();
+        //Flux.range(0, 5)
+        //    .flatMap(item -> Mono.fromCallable(() -> testMono(item)).publishOn(Schedulers.newParallel("mono_test", 5)))
+        //    .collectList()
+        //    .subscribe(item -> System.out.println(item));
+
+        System.out.println("------------");
+        // 无限序列
+        Page page = new Page();
+        page.page = 1;
+        page.size = 2;
+        Flux.generate(ArrayList::new, (list, sink) -> {
+                List<String> byPage = findByPage(page.page, page.size);
+                list.addAll(byPage);
+                sink.next(byPage);
+                if (byPage.size() != page.size) {
+                    sink.complete();
+                }
+                page.page += 1;
+                System.out.println("--2000--"+byPage);
+                return list;
+            })
+            .map(item -> {
+                System.out.println("--1000--"+item);
+                return item;
+            })
+            .collectList()
+            .block();
+
+        //System.out.println(block);
+
+        Flux.range(1, 100).buffer(20).subscribe(System.out::println);
+        Flux.interval(Duration.ofMillis(100)).buffer(Duration.ofMillis(1001)).take(2).toStream().forEach(System.out::println);
+        Flux.range(1, 10).bufferUntil(i -> i % 2 == 0).subscribe(System.out::println);
+        Flux.range(1, 10).bufferWhile(i -> i % 2 == 0).subscribe(System.out::println);
+
+        Flux.range(1, 100).window(20).subscribe(System.out::println);
+
+        Flux.just("a", "b")
+            .zipWith(Flux.just("c", "d"))
+            .subscribe(System.out::println);
+        Flux.just("a", "b")
+            .zipWith(Flux.just("c", "d"), (s1, s2) -> String.format("%s-%s", s1, s2))
+            .subscribe(System.out::println);
+
+
+    }
+
+    private static List<String> findByPage(int page, int size){
+        List<String> ss = new ArrayList<>(size);
+        if (page == 4){
+            size = 1;
+        }
+        for (int i=0; i <size; i++){
+            ss.add(page + "---"+i);
+        }
+        //System.out.println(ss);
+        return ss;
+    }
+
+    private static String testMono(int number) throws Exception{
+        System.out.println(">>>" + number + "任务启动");
+        Date dateTmp1 = new Date();
+        Thread.sleep(1000);
+        Date dateTmp2 = new Date();
+        long time = dateTmp2.getTime() - dateTmp1.getTime();
+        System.out.println(">>>" + number + "任务终止");
+        return number + "任务返回运行结果,当前任务时间【" + time + "毫秒】";
     }
 
     public static String alphabet(int letterNumber){
@@ -251,6 +335,11 @@ public class Flux_test {
     }
 
 }
+class Page{
+    int page = 1;
+    int size = 10;
+}
+
 
 
 

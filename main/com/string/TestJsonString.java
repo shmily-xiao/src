@@ -4,7 +4,7 @@ public class TestJsonString {
 
     public String a;
     public int b;
-    public String c="";
+    public String c="0";
 
     public TestJsonString(){}
 
