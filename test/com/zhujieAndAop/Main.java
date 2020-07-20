@@ -1,11 +1,28 @@
 package com.zhujieAndAop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
         MsgService service = new MsgServiceImpl();
 
         System.out.println(service.sendMsg("Sdfdsf", 1L, 3L));
+
+        List<Integer> ii = new ArrayList<>();
+        ii.add(1);
+        ii.add(2);
+        ii.add(3);
+        ii.add(4);
+        ii.add(5);
+
+        ii.forEach(item -> {
+            if (item == 3){
+                return;
+            }
+            System.out.println(item);
+        });
 
     }
 

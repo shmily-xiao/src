@@ -212,7 +212,6 @@ public class Flux_test {
             })
             .subscribe(System.out::println);
 
-
         // 1111
         // Hello World**
         // 3333
@@ -300,6 +299,25 @@ public class Flux_test {
         Flux.just("a", "b")
             .zipWith(Flux.just("c", "d"), (s1, s2) -> String.format("%s-%s", s1, s2))
             .subscribe(System.out::println);
+
+
+        Mono.just("U")
+            .delayElement(Duration.ofSeconds(1))
+            .filter(item -> "T".equals(item))
+            .switchIfEmpty(Mono.just("U1"))
+            .subscribe(System.out::println);
+
+        Flux.just("U")
+            .log()
+            .filter(item -> "T".equals(item))
+            .switchIfEmpty(Mono.just("U2"))
+            .single()
+            .doOnSuccess(System.out::println)
+            .block();
+
+        System.out.println("TT");
+
+
 
 
     }
